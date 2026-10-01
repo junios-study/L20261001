@@ -7,6 +7,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h" //Important, 추천 분해도 해보셈.
+#include "EnhancedInputComponent.h"
 
 // Sets default values
 ABasePlayer::ABasePlayer()
@@ -48,5 +49,24 @@ void ABasePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	UEnhancedInputComponent* UIC = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+	if (UIC)
+	{
+		UIC->BindAction(IA_Jump, ETriggerEvent::Triggered, this, &ACharacter::Jump);
+		UIC->BindAction(IA_Jump, ETriggerEvent::Canceled, this, &ACharacter::StopJumping);
+
+		UIC->BindAction(IA_Move, ETriggerEvent::Triggered, this, &ABasePlayer::Move);
+
+		UIC->BindAction(IA_MouseLook, ETriggerEvent::Triggered, this, &ABasePlayer::Look);
+	}
+
+}
+
+void ABasePlayer::Move(const FInputActionValue& Value)
+{
+}
+
+void ABasePlayer::Look(const FInputActionValue& Value)
+{
 }
 

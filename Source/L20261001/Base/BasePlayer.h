@@ -9,6 +9,9 @@
 class USpringArmComponent;
 class UCameraComponent;
 
+class UInputAction;
+struct FInputActionValue;
+
 UCLASS()
 class L20261001_API ABasePlayer : public ACharacter
 {
@@ -35,4 +38,18 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UCameraComponent> Camera;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	TObjectPtr<UInputAction> IA_Jump;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	TObjectPtr<UInputAction> IA_Move;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	TObjectPtr<UInputAction> IA_MouseLook;
+
+
+	void Move(const FInputActionValue& Value);
+
+
+	void Look(const FInputActionValue& Value);
 };
