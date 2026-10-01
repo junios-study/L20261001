@@ -64,9 +64,22 @@ void ABasePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 void ABasePlayer::Move(const FInputActionValue& Value)
 {
+	FVector2D Direction = Value.Get<FVector2D>();
+
+	AddMovementInput(
+		GetActorForwardVector() * Direction.Y );
+
+	AddMovementInput(
+		GetActorRightVector() * Direction.X );
+
 }
 
 void ABasePlayer::Look(const FInputActionValue& Value)
 {
+	FVector2D Rotation = Value.Get<FVector2D>();
+
+	AddControllerYawInput(Rotation.X);
+	AddControllerPitchInput(Rotation.Y);
+
 }
 
