@@ -27,7 +27,7 @@ ABasePlayer::ABasePlayer()
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
 
-	GetCharacterMovement()->MaxWalkSpeed = 500.0f;
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 
 }
 
@@ -36,6 +36,7 @@ void ABasePlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 }
 
 // Called every frame
@@ -81,8 +82,26 @@ void ABasePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 		UIC->BindAction(IA_Move, ETriggerEvent::Triggered, this, &ABasePlayer::Move);
 
 		UIC->BindAction(IA_MouseLook, ETriggerEvent::Triggered, this, &ABasePlayer::Look);
+
+		UIC->BindAction(IA_Jog, ETriggerEvent::Triggered, this, &ABasePlayer::Jog);
+		UIC->BindAction(IA_Jog, ETriggerEvent::Completed, this, &ABasePlayer::Jog);
 	}
 
+}
+
+void ABasePlayer::Jog(const FInputActionValue& Value)
+{
+	bool IsJog = Value.Get<bool>();
+
+	if (IsJog)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = JogSpeed;
+	}
+	else
+	{
+		GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+	}
+	
 }
 
 void ABasePlayer::Move(const FInputActionValue& Value)

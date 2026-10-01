@@ -47,6 +47,17 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	TObjectPtr<UInputAction> IA_MouseLook;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	TObjectPtr<UInputAction> IA_Jog;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
+	float WalkSpeed = 300.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
+	float JogSpeed = 500.0f;
+
+	void Jog(const FInputActionValue& Value);
+
 
 	void Move(const FInputActionValue& Value);
 
