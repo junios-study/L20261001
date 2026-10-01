@@ -43,27 +43,28 @@ void ABasePlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	static bool bIdle = false;
-	static bool bJog = false;
+	//animation Blueprint
+	//static bool bIdle = false;
+	//static bool bJog = false;
 
-	if (GetCharacterMovement()->Velocity.SizeSquared() == 0)
-	{
-		if (!bIdle)
-		{
-			GetMesh()->PlayAnimation(IdleAnimation, true);
-			bIdle = true;
-			bJog = false;
-		}
-	}
-	else
-	{
-		if (!bJog)
-		{
-			GetMesh()->PlayAnimation(JogAnimation, true);
-			bJog = true;
-			bIdle = false;
-		}
-	}
+	//if (GetCharacterMovement()->Velocity.SizeSquared() == 0)
+	//{
+	//	if (!bIdle)
+	//	{
+	//		GetMesh()->PlayAnimation(IdleAnimation, true);
+	//		bIdle = true;
+	//		bJog = false;
+	//	}
+	//}
+	//else
+	//{
+	//	if (!bJog)
+	//	{
+	//		GetMesh()->PlayAnimation(JogAnimation, true);
+	//		bJog = true;
+	//		bIdle = false;
+	//	}
+	//}
 }
 
 // Called to bind functionality to input
