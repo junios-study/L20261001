@@ -8,11 +8,12 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h" //Important, 추천 분해도 해보셈.
 #include "EnhancedInputComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 ABasePlayer::ABasePlayer()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	GetMesh()->SetRelativeLocationAndRotation(
@@ -34,7 +35,7 @@ ABasePlayer::ABasePlayer()
 void ABasePlayer::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 // Called every frame
@@ -66,11 +67,8 @@ void ABasePlayer::Move(const FInputActionValue& Value)
 {
 	FVector2D Direction = Value.Get<FVector2D>();
 
-	AddMovementInput(
-		GetActorForwardVector() * Direction.Y );
-
-	AddMovementInput(
-		GetActorRightVector() * Direction.X );
+	AddMovementInput(UKismetMathLibrary::GetForwardVector(FRotator(0, GetControlRotation().Yaw, 0)) * Direction.Y);
+	AddMovementInput(UKismetMathLibrary::GetRightVector(FRotator(0, GetControlRotation().Yaw, 0)) * Direction.X);
 
 }
 
@@ -78,8 +76,13 @@ void ABasePlayer::Look(const FInputActionValue& Value)
 {
 	FVector2D Rotation = Value.Get<FVector2D>();
 
+
+
+
+
 	AddControllerYawInput(Rotation.X);
 	AddControllerPitchInput(Rotation.Y);
+	//AddControllerRollInput();
 
 }
 
