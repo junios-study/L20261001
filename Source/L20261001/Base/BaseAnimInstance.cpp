@@ -18,5 +18,7 @@ void UBaseAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 			Player->GetActorRotation());
 		GroundSpeed = Player->GetCharacterMovement()->Velocity.Size2D();
 		bIsFalling = Player->GetCharacterMovement()->IsFalling(); 
+		bIsArmed = Player->bIsArmed;
+		bIsCrouched = Player->bIsCrouched;
 	}
 }

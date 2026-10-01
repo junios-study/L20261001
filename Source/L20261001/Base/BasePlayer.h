@@ -56,6 +56,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
 	float JogSpeed = 500.0f;
 
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
+	uint8 bIsArmed : 1  = false;
+	//bool
+
 	void Jog(const FInputActionValue& Value);
 
 

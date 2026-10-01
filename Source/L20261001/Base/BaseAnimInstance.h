@@ -25,5 +25,11 @@ public:
 	float Direction = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Status")
-	bool bIsFalling = false;
+	uint8 bIsFalling : 1 = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
+	uint8 bIsArmed : 1 = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
+	uint8 bIsCrouched : 1 = false;
 };
