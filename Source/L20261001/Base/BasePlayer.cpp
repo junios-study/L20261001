@@ -9,6 +9,7 @@
 #include "GameFramework/CharacterMovementComponent.h" //Important, 추천 분해도 해보셈.
 #include "EnhancedInputComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "../Weapons/WeaponBase.h"
 
 // Sets default values
 ABasePlayer::ABasePlayer()
@@ -134,5 +135,14 @@ FRotator ABasePlayer::GetAimRotation() const
 	const FRotator AimRotationLS = AimLS.Rotation();
 
 	return AimRotationLS;
+}
+
+void ABasePlayer::AttachWeapon(TSubclassOf<class AWeaponBase> WeaponTemplate)
+{
+	AWeaponBase* SpawnWeapon = GetWorld()->SpawnActor<AWeaponBase>(WeaponTemplate, FTransform());
+
+	SpawnWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("HandGrip_R"));
+
+	SpawnWeapon->SetOwner(this);
 }
 

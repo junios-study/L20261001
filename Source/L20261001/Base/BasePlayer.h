@@ -77,4 +77,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	FRotator GetAimRotation() const;
+
+	UFUNCTION(BlueprintCallable)
+	void AttachWeapon(TSubclassOf<class AWeaponBase> WeaponTemplate);
+
 };
