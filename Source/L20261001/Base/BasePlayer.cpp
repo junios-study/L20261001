@@ -176,13 +176,14 @@ void ABasePlayer::Fire()
 			PC->GetPlayerViewPoint(CameraLocation, CameraRotation);
 
 			FVector Start = CameraLocation;
-			FVector End = CameraLocation + (WorldDirection * 99999.0f);
+			FVector RandomVector = WorldDirection + (UKismetMathLibrary::RandomUnitVector() * 0.008f);
+			FVector End = CameraLocation + (RandomVector * 99999.0f);
 
 			TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes;
 			TArray<AActor*> IgnoreActors;
 			FHitResult OutHit;
 
-			ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_Pawn));
+			ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_PhysicsBody));
 			ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_WorldDynamic));
 			ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_WorldStatic));
 
@@ -202,8 +203,18 @@ void ABasePlayer::Fire()
 			))
 			{
 				UE_LOG(LogTemp, Warning, TEXT("Hit Actor : %s"), *OutHit.GetActor()->GetName());
+
+				UE_LOG(LogTemp, Warning, TEXT("Hit BoneName : %s"), *OutHit.BoneName.ToString());
+
+				
 			}
+
+			FRotator CurrentRotator = GetControlRotation();
+			float RandomAddPitch = FMath::RandRange(0.5f, 1.5f);
+			CurrentRotator.Pitch += RandomAddPitch;
+			GetController()->SetControlRotation(CurrentRotator);
 		}
 		SpawnWeapon->Fire();
 	}
 }
+;
