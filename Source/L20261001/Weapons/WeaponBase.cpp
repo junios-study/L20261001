@@ -29,3 +29,11 @@ void AWeaponBase::Tick(float DeltaTime)
 
 }
 
+void AWeaponBase::Fire()
+{
+}
+
+void AWeaponBase::Reload()
+{
+}
+

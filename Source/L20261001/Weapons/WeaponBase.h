@@ -7,6 +7,7 @@
 #include "WeaponBase.generated.h"
 
 class USkeletalMeshComponent;
+class UAnimMontage;
 
 UCLASS()
 class L20261001_API AWeaponBase : public AActor
@@ -25,7 +26,19 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	TObjectPtr<USkeletalMeshComponent> Mesh;
+
+	void Fire();
+
+	void Reload();
+
+	UPROPERTY(EditAnywhere, Category = "Animations")
+	TObjectPtr<UAnimMontage> ReloadMontage;
+
+	UPROPERTY(EditAnywhere, Category = "Data")
+	uint32 MaxBullet = 15;
+
+	UPROPERTY(EditAnywhere, Category = "Data")
+	uint32 CurrentBullet = 15;
 };
