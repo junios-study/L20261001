@@ -25,6 +25,12 @@ public:
 	float Direction = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Status")
+	float AimPitch = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Status")
+	float AimYaw = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Status")
 	uint8 bIsFalling : 1 = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")

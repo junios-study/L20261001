@@ -20,5 +20,7 @@ void UBaseAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		bIsFalling = Player->GetCharacterMovement()->IsFalling(); 
 		bIsArmed = Player->bIsArmed;
 		bIsCrouched = Player->bIsCrouched;
+		AimPitch = Player->GetAimRotation().Pitch;
+		AimYaw = Player->GetAimRotation().Yaw;
 	}
 }

@@ -74,4 +74,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animation")
 	TObjectPtr<UAnimationAsset> JogAnimation;
+
+	UFUNCTION(BlueprintCallable)
+	FRotator GetAimRotation() const;
 };

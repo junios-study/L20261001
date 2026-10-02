@@ -127,3 +127,12 @@ void ABasePlayer::Look(const FInputActionValue& Value)
 
 }
 
+FRotator ABasePlayer::GetAimRotation() const
+{
+	const FVector AimWS = GetBaseAimRotation().Vector();
+	const FVector AimLS = ActorToWorld().InverseTransformVectorNoScale(AimWS);
+	const FRotator AimRotationLS = AimLS.Rotation();
+
+	return AimRotationLS;
+}
+
