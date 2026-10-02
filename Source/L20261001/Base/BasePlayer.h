@@ -50,6 +50,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	TObjectPtr<UInputAction> IA_Jog;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	TObjectPtr<UInputAction> IA_Fire;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
 	float WalkSpeed = 300.0f;
 
@@ -80,5 +83,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void AttachWeapon(TSubclassOf<class AWeaponBase> WeaponTemplate);
+
+	UFUNCTION(BlueprintCallable)
+	void Fire();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Data")
+	AWeaponBase* SpawnWeapon;
 
 };

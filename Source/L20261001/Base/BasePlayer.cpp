@@ -10,6 +10,8 @@
 #include "EnhancedInputComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "../Weapons/WeaponBase.h"
+#include "GameFramework/PlayerController.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 // Sets default values
 ABasePlayer::ABasePlayer()
@@ -139,7 +141,7 @@ FRotator ABasePlayer::GetAimRotation() const
 
 void ABasePlayer::AttachWeapon(TSubclassOf<class AWeaponBase> WeaponTemplate)
 {
-	AWeaponBase* SpawnWeapon = GetWorld()->SpawnActor<AWeaponBase>(WeaponTemplate, FTransform());
+	SpawnWeapon = GetWorld()->SpawnActor<AWeaponBase>(WeaponTemplate, FTransform());
 
 	SpawnWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("HandGrip_R"));
 
@@ -148,3 +150,60 @@ void ABasePlayer::AttachWeapon(TSubclassOf<class AWeaponBase> WeaponTemplate)
 	bIsArmed = true;
 }
 
+
+void ABasePlayer::Fire()
+{
+	if (bIsArmed)
+	{
+		APlayerController* PC = Cast<APlayerController>(GetController());
+		if (PC)
+		{
+			int32 SizeX = 0;
+			int32 SizeY = 0;
+			PC->GetViewportSize(SizeX, SizeY);
+			int32 CenterX = SizeX / 2;
+			int32 CenterY = SizeY / 2;
+
+			FVector WorldPosition;
+			FVector WorldDirection;
+
+			//2D -> 3D(World) Deprojection , 3D(World) -> 2D Projection
+			PC->DeprojectScreenPositionToWorld(CenterX, CenterY,
+				WorldPosition, WorldDirection);
+
+			FVector CameraLocation;
+			FRotator CameraRotation;
+			PC->GetPlayerViewPoint(CameraLocation, CameraRotation);
+
+			FVector Start = CameraLocation;
+			FVector End = CameraLocation + (WorldDirection * 99999.0f);
+
+			TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes;
+			TArray<AActor*> IgnoreActors;
+			FHitResult OutHit;
+
+			ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_Pawn));
+			ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_WorldDynamic));
+			ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_WorldStatic));
+
+			if (UKismetSystemLibrary::LineTraceSingleForObjects(
+				GetWorld(),
+				Start,
+				End,
+				ObjectTypes,
+				true,
+				IgnoreActors,
+				EDrawDebugTrace::ForDuration,
+				OutHit,
+				true,
+				FLinearColor::Red,
+				FLinearColor::Green,
+				3.0f
+			))
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Hit Actor : %s"), *OutHit.GetActor()->GetName());
+			}
+		}
+		SpawnWeapon->Fire();
+	}
+}
