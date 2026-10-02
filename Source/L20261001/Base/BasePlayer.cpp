@@ -144,5 +144,7 @@ void ABasePlayer::AttachWeapon(TSubclassOf<class AWeaponBase> WeaponTemplate)
 	SpawnWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("HandGrip_R"));
 
 	SpawnWeapon->SetOwner(this);
+
+	bIsArmed = true;
 }
 
