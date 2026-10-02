@@ -9,6 +9,15 @@
 class USkeletalMeshComponent;
 class UAnimMontage;
 
+UENUM()
+enum class EWeaponType : uint8
+{
+	None = 0 UMETA(Display = "None"),
+	Pistol = 1 UMETA(Display="Pistol"),
+	Rifle = 2 UMETA(Display = "Rifle"),
+	Launcher = 3 UMETA(Display = "Launcher"),
+};
+
 UCLASS()
 class L20261001_API AWeaponBase : public AActor
 {
@@ -46,5 +55,5 @@ public:
 	uint32 CurrentBullet = 15;
 
 	UPROPERTY(EditAnywhere, Category = "Data")
-	FName WeaponType;
+	EWeaponType WeaponType;
 };

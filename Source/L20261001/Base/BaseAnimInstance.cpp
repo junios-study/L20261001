@@ -22,5 +22,13 @@ void UBaseAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		bIsCrouched = Player->bIsCrouched;
 		AimPitch = Player->GetAimRotation().Pitch;
 		AimYaw = Player->GetAimRotation().Yaw;
+		if (Player->SpawnWeapon)
+		{
+			WeaponType = Player->SpawnWeapon->WeaponType;
+		}
+		else
+		{
+			//WeaponType = EWeaponType::None;
+		}
 	}
 }

@@ -90,4 +90,13 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Data")
 	AWeaponBase* SpawnWeapon;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
+	TObjectPtr<UAnimMontage> MeleeAttackMontage;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
+	int32 ComboCount = 0;
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayMeleeAttack();
 };

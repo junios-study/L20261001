@@ -4,6 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+
+#include "../Weapons/WeaponBase.h"
+
 #include "BaseAnimInstance.generated.h"
 
 /**
@@ -38,4 +41,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
 	uint8 bIsCrouched : 1 = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
+	EWeaponType WeaponType;
 };

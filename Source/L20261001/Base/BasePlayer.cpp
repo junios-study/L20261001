@@ -213,12 +213,20 @@ void ABasePlayer::Fire()
 			CurrentRotator.Pitch += RandomAddPitch;
 			GetController()->SetControlRotation(CurrentRotator);
 
-			PlayAnimMontage(SpawnWeapon->FireMontage, 1.0f, SpawnWeapon->WeaponType);
-			//PlayAnimMontage(SpawnWeapon->ReloadMontage, 1.0f, SpawnWeapon->WeaponType);
+			const UEnum* EnumPtr = FindObject<UEnum>(GetOuter(), TEXT("EWeaponType"), EFindObjectFlags::ExactClass);
 
-			
+			if (EnumPtr)
+			{
+				FName SectionName = EnumPtr->GetNameByIndex((int32)SpawnWeapon->WeaponType);
+				PlayAnimMontage(SpawnWeapon->FireMontage, 1.0f, SectionName);
+			}
+
+			SpawnWeapon->Fire();
 		}
-		SpawnWeapon->Fire();
+	}
+	else
+	{
+		//call C++, Execute BP
+		PlayMeleeAttack();
 	}
 }
-;
