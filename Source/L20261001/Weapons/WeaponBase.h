@@ -36,9 +36,15 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Animations")
 	TObjectPtr<UAnimMontage> ReloadMontage;
 
+	UPROPERTY(EditAnywhere, Category = "Animations")
+	TObjectPtr<UAnimMontage> FireMontage;
+
 	UPROPERTY(EditAnywhere, Category = "Data")
 	uint32 MaxBullet = 15;
 
 	UPROPERTY(EditAnywhere, Category = "Data")
 	uint32 CurrentBullet = 15;
+
+	UPROPERTY(EditAnywhere, Category = "Data")
+	FName WeaponType;
 };

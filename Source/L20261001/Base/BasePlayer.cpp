@@ -205,14 +205,18 @@ void ABasePlayer::Fire()
 				UE_LOG(LogTemp, Warning, TEXT("Hit Actor : %s"), *OutHit.GetActor()->GetName());
 
 				UE_LOG(LogTemp, Warning, TEXT("Hit BoneName : %s"), *OutHit.BoneName.ToString());
-
-				
+			
 			}
 
 			FRotator CurrentRotator = GetControlRotation();
 			float RandomAddPitch = FMath::RandRange(0.5f, 1.5f);
 			CurrentRotator.Pitch += RandomAddPitch;
 			GetController()->SetControlRotation(CurrentRotator);
+
+			PlayAnimMontage(SpawnWeapon->FireMontage, 1.0f, SpawnWeapon->WeaponType);
+			//PlayAnimMontage(SpawnWeapon->ReloadMontage, 1.0f, SpawnWeapon->WeaponType);
+
+			
 		}
 		SpawnWeapon->Fire();
 	}
