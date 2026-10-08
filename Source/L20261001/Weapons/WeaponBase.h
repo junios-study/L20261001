@@ -13,9 +13,10 @@ UENUM()
 enum class EWeaponType : uint8
 {
 	None = 0 UMETA(Display = "None"),
-	Pistol = 1 UMETA(Display="Pistol"),
-	Rifle = 2 UMETA(Display = "Rifle"),
-	Launcher = 3 UMETA(Display = "Launcher"),
+	Pistol = 10 UMETA(Display = "Pistol"),
+	Pistol2 = 20 UMETA(Display = "Pistol2"),
+	Rifle = 30 UMETA(Display = "Rifle"),
+	Launcher = 40 UMETA(Display = "Launcher"),
 };
 
 UCLASS()
