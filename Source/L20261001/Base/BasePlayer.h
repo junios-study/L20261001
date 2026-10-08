@@ -56,6 +56,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	TObjectPtr<UInputAction> IA_ChangeWeapon;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	TObjectPtr<UInputAction> IA_Lean;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	TObjectPtr<UInputAction> IA_Zoom;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
 	float WalkSpeed = 300.0f;
 
@@ -73,6 +79,11 @@ public:
 
 
 	void ChangeWeapon(const FInputActionValue& Value);
+
+	void Zoom(const FInputActionValue& Value);
+
+
+	void Lean(const FInputActionValue& Value);
 	
 
 
@@ -100,6 +111,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
 	TObjectPtr<UAnimMontage> MeleeAttackMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	float TargetLeanAngle = 0;
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")

@@ -41,4 +41,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
 	EWeaponType WeaponType;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
+	float TargetLeanAngle;
+
+	
 };

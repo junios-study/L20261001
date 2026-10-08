@@ -91,6 +91,9 @@ void ABasePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 		UIC->BindAction(IA_ChangeWeapon, ETriggerEvent::Triggered, this, &ABasePlayer::ChangeWeapon);
 
+		UIC->BindAction(IA_Lean, ETriggerEvent::Triggered, this, &ABasePlayer::Lean);
+		UIC->BindAction(IA_Lean, ETriggerEvent::Completed, this, &ABasePlayer::Lean);
+
 
 		
 	}
@@ -173,6 +176,18 @@ void ABasePlayer::ChangeWeapon(const FInputActionValue& Value)
 	CurrentWeapon = HaveWeapons[NewUsedWeapon];
 
 	CurrentWeapon->SetActorHiddenInGame(false);
+}
+
+void ABasePlayer::Zoom(const FInputActionValue& Value)
+{
+	
+}
+
+void ABasePlayer::Lean(const FInputActionValue& Value)
+{
+	float Direction = Value.Get<float>();
+
+	TargetLeanAngle = 30.0f * Direction;
 }
 
 FRotator ABasePlayer::GetAimRotation() const
