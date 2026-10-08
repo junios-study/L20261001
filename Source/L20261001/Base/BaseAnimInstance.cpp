@@ -52,3 +52,16 @@ void UBaseAnimInstance::AnimNotify_CPPAttackCheck(UAnimNotify* Notify)
 {
 	UE_LOG(LogTemp, Warning, TEXT("AnimNotify_CPPAttackCheck"));
 }
+
+void UBaseAnimInstance::CheckHit()
+{
+	UE_LOG(LogTemp, Warning, TEXT("CheckHit 1"));
+
+	ABasePlayer* Player = Cast<ABasePlayer>(TryGetPawnOwner());
+	if (Player)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("CheckHit 2"));
+
+		Player->CheckHit();
+	}
+}

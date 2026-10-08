@@ -12,6 +12,7 @@
 #include "../Weapons/WeaponBase.h"
 #include "GameFramework/PlayerController.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ABasePlayer::ABasePlayer()
@@ -374,5 +375,46 @@ void ABasePlayer::CheckCombo()
 	{
 		PlayMontageMeleeAttack();
 		PlayingComboIndex = ComboCount;
+	}
+}
+
+void ABasePlayer::CheckHit()
+{
+	UE_LOG(LogTemp, Warning, TEXT("CheckHit"));
+
+	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes;
+	TArray<AActor*> IgnoreActors;
+	TArray<AActor*> OutActors;
+	IgnoreActors.Add(this);
+
+	ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_PhysicsBody));
+
+
+	bool Result = UKismetSystemLibrary::SphereOverlapActors(
+		GetWorld(),
+		GetActorLocation() + (GetActorForwardVector() * 150.0f),
+		80.0f,
+		ObjectTypes,
+		ABasePlayer::StaticClass(),
+		IgnoreActors,
+		OutActors
+	);
+
+	if (Result)
+	{
+		for (auto Actor : OutActors)
+		{
+			ABasePlayer* DamagedPlayer = Cast<ABasePlayer>(Actor);
+			if (DamagedPlayer)
+			{
+				DamagedPlayer->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+				//UGameplayStatics::ApplyDamage();
+				DamagedPlayer->GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+				DamagedPlayer->GetMesh()->SetSimulatePhysics(true);
+				DamagedPlayer->GetMesh()->AddImpulse(
+					(GetActorForwardVector() + GetActorUpVector()) * 30000.0f
+				);
+			}
+		}
 	}
 }

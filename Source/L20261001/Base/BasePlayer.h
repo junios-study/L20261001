@@ -135,6 +135,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void CheckCombo();
 
+	UFUNCTION(BlueprintCallable)
+	void CheckHit();
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Status")
 	uint8 bIsZoom : 1 = false;

@@ -59,6 +59,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
 	float CurrentBigHeadScale = 1.0f;
 
+	UFUNCTION(BlueprintCallable)
+	void CheckHit();
+
 	UFUNCTION()
 	void AnimNotify_CPPAttackCheck(UAnimNotify* Notify);
 
