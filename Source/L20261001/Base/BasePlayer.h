@@ -60,10 +60,6 @@ public:
 	float JogSpeed = 500.0f;
 
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
-	uint8 bIsArmed : 1  = false;
-	//bool
-
 	void Jog(const FInputActionValue& Value);
 
 
@@ -88,7 +84,10 @@ public:
 	void Fire();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Data")
-	AWeaponBase* SpawnWeapon;
+	TArray<TObjectPtr<AWeaponBase>> HaveWeapons;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Data")
+	TObjectPtr<AWeaponBase> CurrentWeapon;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
 	TObjectPtr<UAnimMontage> MeleeAttackMontage;

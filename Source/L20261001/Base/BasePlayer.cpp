@@ -141,19 +141,18 @@ FRotator ABasePlayer::GetAimRotation() const
 
 void ABasePlayer::AttachWeapon(TSubclassOf<class AWeaponBase> WeaponTemplate)
 {
-	SpawnWeapon = GetWorld()->SpawnActor<AWeaponBase>(WeaponTemplate, FTransform());
+	AWeaponBase* SpawnWeapon = GetWorld()->SpawnActor<AWeaponBase>(WeaponTemplate, FTransform());
+	HaveWeapons.Add(SpawnWeapon);
 
 	SpawnWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("HandGrip_R"));
 
 	SpawnWeapon->SetOwner(this);
-
-	bIsArmed = true;
 }
 
 
 void ABasePlayer::Fire()
 {
-	if (bIsArmed)
+	if (CurrentWeapon && CurrentWeapon->WeaponType != EWeaponType::Unarmed)
 	{
 		APlayerController* PC = Cast<APlayerController>(GetController());
 		if (PC)
@@ -217,11 +216,11 @@ void ABasePlayer::Fire()
 
 			if (EnumPtr)
 			{
-				FName SectionName = EnumPtr->GetNameByIndex((int32)SpawnWeapon->WeaponType);
-				PlayAnimMontage(SpawnWeapon->FireMontage, 1.0f, SectionName);
+				FName SectionName = EnumPtr->GetNameByIndex((int32)CurrentWeapon->WeaponType);
+				PlayAnimMontage(CurrentWeapon->FireMontage, 1.0f, SectionName);
 			}
 
-			SpawnWeapon->Fire();
+			CurrentWeapon->Fire();
 		}
 	}
 	else

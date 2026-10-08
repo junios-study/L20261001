@@ -18,13 +18,12 @@ void UBaseAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 			Player->GetActorRotation());
 		GroundSpeed = Player->GetCharacterMovement()->Velocity.Size2D();
 		bIsFalling = Player->GetCharacterMovement()->IsFalling(); 
-		bIsArmed = Player->bIsArmed;
 		bIsCrouched = Player->bIsCrouched;
 		AimPitch = Player->GetAimRotation().Pitch;
 		AimYaw = Player->GetAimRotation().Yaw;
-		if (Player->SpawnWeapon)
+		if (Player->CurrentWeapon)
 		{
-			WeaponType = Player->SpawnWeapon->WeaponType;
+			WeaponType = Player->CurrentWeapon->WeaponType;
 		}
 		else
 		{

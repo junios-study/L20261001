@@ -4,6 +4,7 @@
 #include "BaseHUD.h"
 #include "Engine/Canvas.h"
 #include "BasePlayer.h"
+#include "../Weapons/WeaponBase.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 void ABaseHUD::DrawHUD()
@@ -15,7 +16,7 @@ void ABaseHUD::DrawHUD()
 	int32 ShotOffset = Unit * 3;
 
 	ABasePlayer* Player = Cast<ABasePlayer>(GetOwningPawn());
-	if (Player && Player->bIsArmed)
+	if (Player && Player->CurrentWeapon && Player->CurrentWeapon->WeaponType != EWeaponType::Unarmed)
 	{
 		float MaxSpeed = Player->JogSpeed;
 		float CurrentSpeed = Player->GetCharacterMovement()->Velocity.Size2D();

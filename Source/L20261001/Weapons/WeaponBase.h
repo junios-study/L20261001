@@ -12,7 +12,7 @@ class UAnimMontage;
 UENUM()
 enum class EWeaponType : uint8
 {
-	None = 0 UMETA(Display = "None"),
+	Unarmed = 0 UMETA(Display = "Unarmed"),
 	Pistol = 10 UMETA(Display = "Pistol"),
 	Pistol2 = 20 UMETA(Display = "Pistol2"),
 	Rifle = 30 UMETA(Display = "Rifle"),
