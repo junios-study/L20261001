@@ -9,7 +9,7 @@
 class USkeletalMeshComponent;
 class UAnimMontage;
 
-UENUM()
+UENUM(BlueprintType)
 enum class EWeaponType : uint8
 {
 	Unarmed = 0 UMETA(Display = "Unarmed"),

@@ -256,6 +256,8 @@ void ABasePlayer::Fire()
 			FVector RandomVector = WorldDirection + (UKismetMathLibrary::RandomUnitVector() * 0.008f);
 			FVector End = CameraLocation + (RandomVector * 99999.0f);
 
+			
+
 			TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes;
 			TArray<AActor*> IgnoreActors;
 			FHitResult OutHit;
@@ -285,19 +287,18 @@ void ABasePlayer::Fire()
 			
 			}
 
-			FRotator CurrentRotator = GetControlRotation();
-			float RandomAddPitch = FMath::RandRange(0.5f, 1.5f);
-			CurrentRotator.Pitch += RandomAddPitch;
-			GetController()->SetControlRotation(CurrentRotator);
+			//FRotator CurrentRotator = GetControlRotation();
+			//float RandomAddPitch = FMath::RandRange(0.5f, 1.5f);
+			//CurrentRotator.Pitch += RandomAddPitch;
+			//GetController()->SetControlRotation(CurrentRotator);
 
 			//리플렉션 
 			//EWeaponType::Unarmed -> "Unarmed"
 			//Enum to String(Unarmed, Pistol)
-			const UEnum* EnumPtr = FindObject<UEnum>(GetOuter(), TEXT("EWeaponType"), EFindObjectFlags::ExactClass);
-
+			const UEnum* EnumPtr = StaticEnum<EWeaponType>();
 			if (EnumPtr)
 			{
-				FName SectionName = EnumPtr->GetNameByIndex((int32)CurrentWeapon->WeaponType);
+				FName SectionName = EnumPtr->GetNameByValue((int32)CurrentWeapon->WeaponType);
 				PlayAnimMontage(CurrentWeapon->FireMontage, 1.0f, SectionName);
 			}
 
