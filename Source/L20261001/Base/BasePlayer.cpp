@@ -298,8 +298,9 @@ void ABasePlayer::Fire()
 			const UEnum* EnumPtr = StaticEnum<EWeaponType>();
 			if (EnumPtr)
 			{
-				FName SectionName = EnumPtr->GetNameByValue((int32)CurrentWeapon->WeaponType);
-				PlayAnimMontage(CurrentWeapon->FireMontage, 1.0f, SectionName);
+				FString SectionName = EnumPtr->GetNameStringByValue((int32)CurrentWeapon->WeaponType);
+				PlayAnimMontage(CurrentWeapon->FireMontage, 1.0f, FName(SectionName));
+				UE_LOG(LogTemp, Warning, TEXT("Fire %s"), *SectionName);
 			}
 
 			CurrentWeapon->Fire();
