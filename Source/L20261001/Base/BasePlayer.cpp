@@ -141,6 +141,15 @@ FRotator ABasePlayer::GetAimRotation() const
 
 void ABasePlayer::AttachWeapon(TSubclassOf<class AWeaponBase> WeaponTemplate)
 {
+	for (auto Weapon : HaveWeapons)
+	{
+		//클래스 이름 똑같냐?
+		if (Weapon->GetClass() == WeaponTemplate)
+		{
+			return;
+		}
+	}
+
 	//같은 총 집으면 교체 안 먹기
 	AWeaponBase* SpawnWeapon = GetWorld()->SpawnActor<AWeaponBase>(WeaponTemplate, FTransform());
 	HaveWeapons.Add(SpawnWeapon);
@@ -149,7 +158,13 @@ void ABasePlayer::AttachWeapon(TSubclassOf<class AWeaponBase> WeaponTemplate)
 
 	SpawnWeapon->SetOwner(this);
 
+	if (CurrentWeapon)
+	{
+		CurrentWeapon->SetActorHiddenInGame(true);
+	}
+
 	CurrentWeapon = SpawnWeapon;
+
 }
 
 
