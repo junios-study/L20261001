@@ -141,12 +141,15 @@ FRotator ABasePlayer::GetAimRotation() const
 
 void ABasePlayer::AttachWeapon(TSubclassOf<class AWeaponBase> WeaponTemplate)
 {
+	//같은 총 집으면 교체 안 먹기
 	AWeaponBase* SpawnWeapon = GetWorld()->SpawnActor<AWeaponBase>(WeaponTemplate, FTransform());
 	HaveWeapons.Add(SpawnWeapon);
 
 	SpawnWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("HandGrip_R"));
 
 	SpawnWeapon->SetOwner(this);
+
+	CurrentWeapon = SpawnWeapon;
 }
 
 
@@ -212,6 +215,9 @@ void ABasePlayer::Fire()
 			CurrentRotator.Pitch += RandomAddPitch;
 			GetController()->SetControlRotation(CurrentRotator);
 
+			//리플렉션 
+			//EWeaponType::Unarmed -> "Unarmed"
+			//Enum to String(Unarmed, Pistol)
 			const UEnum* EnumPtr = FindObject<UEnum>(GetOuter(), TEXT("EWeaponType"), EFindObjectFlags::ExactClass);
 
 			if (EnumPtr)

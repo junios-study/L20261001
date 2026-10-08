@@ -27,7 +27,9 @@ void UBaseAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		}
 		else
 		{
-			//WeaponType = EWeaponType::None;
+			WeaponType = EWeaponType::Unarmed;
 		}
+
+		UE_LOG(LogTemp, Warning, TEXT("%d"), WeaponType);
 	}
 }
