@@ -287,10 +287,10 @@ void ABasePlayer::Fire()
 			
 			}
 
-			//FRotator CurrentRotator = GetControlRotation();
-			//float RandomAddPitch = FMath::RandRange(0.5f, 1.5f);
-			//CurrentRotator.Pitch += RandomAddPitch;
-			//GetController()->SetControlRotation(CurrentRotator);
+			FRotator CurrentRotator = GetControlRotation();
+			float RandomAddPitch = FMath::RandRange(0.5f, 1.5f);
+			CurrentRotator.Pitch += RandomAddPitch;
+			GetController()->SetControlRotation(CurrentRotator);
 
 			//리플렉션 
 			//EWeaponType::Unarmed -> "Unarmed"
@@ -300,7 +300,6 @@ void ABasePlayer::Fire()
 			{
 				FString SectionName = EnumPtr->GetNameStringByValue((int32)CurrentWeapon->WeaponType);
 				PlayAnimMontage(CurrentWeapon->FireMontage, 1.0f, FName(SectionName));
-				UE_LOG(LogTemp, Warning, TEXT("Fire %s"), *SectionName);
 			}
 
 			CurrentWeapon->Fire();
