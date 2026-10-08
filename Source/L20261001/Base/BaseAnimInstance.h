@@ -45,5 +45,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
 	float TargetLeanAngle;
 
-	
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
+	float CurrentLeanAngle;
+
 };

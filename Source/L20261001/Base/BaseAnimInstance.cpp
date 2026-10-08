@@ -23,6 +23,8 @@ void UBaseAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		AimYaw = Player->GetAimRotation().Yaw;
 		TargetLeanAngle = Player->TargetLeanAngle;
 
+		CurrentLeanAngle = FMath::FInterpTo(CurrentLeanAngle, TargetLeanAngle, DeltaSeconds, 5.0f);
+
 		if (Player->CurrentWeapon)
 		{
 			WeaponType = Player->CurrentWeapon->WeaponType;
