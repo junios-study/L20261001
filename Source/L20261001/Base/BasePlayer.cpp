@@ -95,7 +95,8 @@ void ABasePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 		UIC->BindAction(IA_Lean, ETriggerEvent::Completed, this, &ABasePlayer::Lean);
 
 
-		
+		UIC->BindAction(IA_Zoom, ETriggerEvent::Triggered, this, &ABasePlayer::Zoom);
+		UIC->BindAction(IA_Zoom, ETriggerEvent::Completed, this, &ABasePlayer::Zoom);
 	}
 
 }
@@ -180,7 +181,14 @@ void ABasePlayer::ChangeWeapon(const FInputActionValue& Value)
 
 void ABasePlayer::Zoom(const FInputActionValue& Value)
 {
-	
+	if (CurrentWeapon && CurrentWeapon->WeaponType != EWeaponType::Unarmed)
+	{
+		bIsZoom = Value.Get<bool>();
+	}
+	else
+	{
+		bIsZoom = false;
+	}
 }
 
 void ABasePlayer::Lean(const FInputActionValue& Value)

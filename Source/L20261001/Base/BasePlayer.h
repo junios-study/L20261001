@@ -128,4 +128,8 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void PlayMeleeAttack();
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Status")
+	uint8 bIsZoom : 1 = false;
 };

@@ -46,3 +46,9 @@ void UBaseAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		}
 	}
 }
+
+//Skeletion AnimNotify
+void UBaseAnimInstance::AnimNotify_CPPAttackCheck(UAnimNotify* Notify)
+{
+	UE_LOG(LogTemp, Warning, TEXT("AnimNotify_CPPAttackCheck"));
+}
