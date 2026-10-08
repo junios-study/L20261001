@@ -293,6 +293,16 @@ void ABasePlayer::Fire()
 				UE_LOG(LogTemp, Warning, TEXT("Hit Actor : %s"), *OutHit.GetActor()->GetName());
 
 				UE_LOG(LogTemp, Warning, TEXT("Hit BoneName : %s"), *OutHit.BoneName.ToString());
+
+				UGameplayStatics::ApplyPointDamage(
+					OutHit.GetActor(),
+					50.0f,
+					-OutHit.ImpactNormal,
+					OutHit,
+					GetController(),
+					this,
+					nullptr
+				);
 			
 			}
 
@@ -380,8 +390,6 @@ void ABasePlayer::CheckCombo()
 
 void ABasePlayer::CheckHit()
 {
-	UE_LOG(LogTemp, Warning, TEXT("CheckHit"));
-
 	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes;
 	TArray<AActor*> IgnoreActors;
 	TArray<AActor*> OutActors;
@@ -389,6 +397,7 @@ void ABasePlayer::CheckHit()
 
 	ObjectTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_PhysicsBody));
 
+	
 
 	bool Result = UKismetSystemLibrary::SphereOverlapActors(
 		GetWorld(),
@@ -407,14 +416,35 @@ void ABasePlayer::CheckHit()
 			ABasePlayer* DamagedPlayer = Cast<ABasePlayer>(Actor);
 			if (DamagedPlayer)
 			{
-				DamagedPlayer->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-				//UGameplayStatics::ApplyDamage();
-				DamagedPlayer->GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-				DamagedPlayer->GetMesh()->SetSimulatePhysics(true);
-				DamagedPlayer->GetMesh()->AddImpulse(
-					(GetActorForwardVector() + GetActorUpVector()) * 30000.0f
+				UGameplayStatics::ApplyDamage(
+					DamagedPlayer,
+					50.0f,
+					GetController(),
+					this,
+					nullptr
 				);
 			}
 		}
 	}
+}
+
+float ABasePlayer::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+
+	CurrentHP -= DamageAmount;
+	if (CurrentHP > 0)
+	{
+		GetCharacterMovement()->AddImpulse((GetActorForwardVector() + GetActorUpVector()) * GetMesh()->GetMass() * 7.0f, true);
+		PlayAnimMontage(HitRectionMontage);
+	}
+	else
+	{
+		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		GetMesh()->SetSimulatePhysics(true);
+		GetMesh()->AddImpulse((GetActorForwardVector() + GetActorUpVector()) * GetMesh()->GetMass() * 400.0f);
+	}
+
+	return 0.0f;
 }

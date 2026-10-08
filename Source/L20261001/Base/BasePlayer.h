@@ -115,6 +115,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
 	TObjectPtr<UAnimMontage> MeleeAttackMontage;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
+	TObjectPtr<UAnimMontage> HitRectionMontage;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	float TargetLeanAngle = 0;
 
@@ -151,4 +154,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
 	int32 PlayingComboIndex = 0;
+
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)  override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Status")
+	float CurrentHP = 100;
+
 };
