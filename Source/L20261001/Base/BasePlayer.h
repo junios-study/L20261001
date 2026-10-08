@@ -53,6 +53,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	TObjectPtr<UInputAction> IA_Fire;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	TObjectPtr<UInputAction> IA_ChangeWeapon;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
 	float WalkSpeed = 300.0f;
 
@@ -68,6 +71,11 @@ public:
 
 	void Look(const FInputActionValue& Value);
 
+
+	void ChangeWeapon(const FInputActionValue& Value);
+	
+
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animation")
 	TObjectPtr<UAnimationAsset> IdleAnimation;
 
@@ -82,6 +90,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void Fire();
+
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Data")
 	TArray<TObjectPtr<AWeaponBase>> HaveWeapons;

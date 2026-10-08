@@ -88,6 +88,11 @@ void ABasePlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 		UIC->BindAction(IA_Jog, ETriggerEvent::Triggered, this, &ABasePlayer::Jog);
 		UIC->BindAction(IA_Jog, ETriggerEvent::Completed, this, &ABasePlayer::Jog);
+
+		UIC->BindAction(IA_ChangeWeapon, ETriggerEvent::Triggered, this, &ABasePlayer::ChangeWeapon);
+
+
+		
 	}
 
 }
@@ -128,6 +133,46 @@ void ABasePlayer::Look(const FInputActionValue& Value)
 	AddControllerPitchInput(Rotation.Y);
 	//AddControllerRollInput();
 
+}
+
+void ABasePlayer::ChangeWeapon(const FInputActionValue& Value)
+{
+	float Delta = Value.Get<float>();
+
+	int MaxWeaponCount = HaveWeapons.Num();
+	int CurrentUsedWeaponIndex = -1;
+	if (MaxWeaponCount <= 1)
+	{
+		return;
+	}
+
+	//현재 사용하는 무기 번호 가져오기
+	for (int i = 0; i < MaxWeaponCount; ++i)
+	{
+		//무기 이름 같냐?
+		if (CurrentWeapon.GetClass() == HaveWeapons[i].GetClass())
+		{
+			CurrentUsedWeaponIndex = i;
+		}
+	}
+
+	int64 NewUsedWeapon = CurrentUsedWeaponIndex + Delta;
+
+	if (NewUsedWeapon < 0)
+	{
+		NewUsedWeapon = MaxWeaponCount - 1;
+	}
+	else if (NewUsedWeapon >= MaxWeaponCount)
+	{
+		NewUsedWeapon = 0;
+	}
+	//NewUsedWeapon = FMath::Clamp(NewUsedWeapon, 0, MaxWeaponCount - 1);
+	
+	CurrentWeapon->SetActorHiddenInGame(true);
+
+	CurrentWeapon = HaveWeapons[NewUsedWeapon];
+
+	CurrentWeapon->SetActorHiddenInGame(false);
 }
 
 FRotator ABasePlayer::GetAimRotation() const
