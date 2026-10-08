@@ -102,6 +102,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Fire();
 
+	UFUNCTION(BlueprintCallable)
+	void ChangeBigHeadMode();
+
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Data")
 	TArray<TObjectPtr<AWeaponBase>> HaveWeapons;
@@ -114,6 +117,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	float TargetLeanAngle = 0;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	uint64 bIsBigHeadMode : 1 = false;
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")

@@ -23,6 +23,17 @@ void UBaseAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		AimYaw = Player->GetAimRotation().Yaw;
 		TargetLeanAngle = Player->TargetLeanAngle;
 
+		bIsBigHeadMode = Player->bIsBigHeadMode;
+		if (bIsBigHeadMode)
+		{
+			CurrentBigHeadScale = FMath::FInterpTo(CurrentBigHeadScale, BigHeadScale, DeltaSeconds, 4.0f);
+		}
+		else
+		{
+			CurrentBigHeadScale = FMath::FInterpTo(CurrentBigHeadScale, 1.0f, DeltaSeconds, 4.0f);
+		}
+
+
 		CurrentLeanAngle = FMath::FInterpTo(CurrentLeanAngle, TargetLeanAngle, DeltaSeconds, 5.0f);
 
 		if (Player->CurrentWeapon)

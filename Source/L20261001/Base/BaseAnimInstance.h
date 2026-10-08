@@ -49,4 +49,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
 	float CurrentLeanAngle;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
+	uint64 bIsBigHeadMode : 1 = false;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
+	float BigHeadScale = 2.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Status")
+	float CurrentBigHeadScale = 1.0f;
+
+
+
 };

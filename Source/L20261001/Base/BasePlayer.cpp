@@ -310,3 +310,8 @@ void ABasePlayer::Fire()
 		PlayMeleeAttack();
 	}
 }
+
+void ABasePlayer::ChangeBigHeadMode()
+{
+	bIsBigHeadMode = ~bIsBigHeadMode;
+}
