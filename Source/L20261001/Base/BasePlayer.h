@@ -123,13 +123,29 @@ public:
 	uint64 bIsBigHeadMode : 1 = false;
 
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
-	int32 ComboCount = 0;
-
 	UFUNCTION(BlueprintImplementableEvent)
 	void PlayMeleeAttack();
+
+	UFUNCTION(BlueprintCallable)
+	void PlayMontageMeleeAttack();
+
+	UFUNCTION(BlueprintCallable)
+	void AttackCombo();
+
+	UFUNCTION(BlueprintCallable)
+	void CheckCombo();
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Status")
 	uint8 bIsZoom : 1 = false;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
+	uint8 bIsMeleeAttacking : 1 = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
+	int32 ComboCount = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations")
+	int32 PlayingComboIndex = 0;
 };

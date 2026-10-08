@@ -316,11 +316,63 @@ void ABasePlayer::Fire()
 	else
 	{
 		//call C++, Execute BP
-		PlayMeleeAttack();
+		//PlayMeleeAttack();
+		AttackCombo();
 	}
 }
 
 void ABasePlayer::ChangeBigHeadMode()
 {
 	bIsBigHeadMode = ~bIsBigHeadMode;
+}
+
+void ABasePlayer::PlayMontageMeleeAttack()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if (AnimInstance)
+	{
+		FString SectionName = FString::Printf(TEXT("Attack0%d"), ComboCount);
+
+		float MontageLength = PlayAnimMontage(MeleeAttackMontage, 1.0f, FName(SectionName));
+		if (MontageLength > 0)
+		{
+			FOnMontageEnded EndDelegate;
+			EndDelegate.BindLambda([this](UAnimMontage* Montage, bool bInterrupted) {
+				if (!bInterrupted)
+				{
+					ComboCount = 0;
+					PlayingComboIndex = 0;
+					bIsMeleeAttacking = false;
+				}
+			});
+
+			AnimInstance->Montage_SetEndDelegate(EndDelegate);
+		}
+	}
+}
+
+void ABasePlayer::AttackCombo()
+{
+	if (!bIsMeleeAttacking) //처음 공격
+	{
+		ComboCount++;
+		PlayMontageMeleeAttack();
+		bIsMeleeAttacking = true;
+		PlayingComboIndex = ComboCount; // 1 = 1
+	}
+	else if (bIsMeleeAttacking && PlayingComboIndex == ComboCount)
+	{
+		ComboCount++;
+	}
+	
+}
+
+void ABasePlayer::CheckCombo()
+{
+	//anim notify에서 호출
+	if (PlayingComboIndex != ComboCount)
+	{
+		PlayMontageMeleeAttack();
+		PlayingComboIndex = ComboCount;
+	}
 }
